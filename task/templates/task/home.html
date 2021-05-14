@@ -1,0 +1,4 @@
+{% for project in project %}
+{% csrf_token %}
+<a href="{% url 'task:task_create' project.id  %}">{{ project.name }}</a><br>
+{% endfor %}
