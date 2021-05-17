@@ -1,0 +1,12 @@
+ProjectName : {{ project.name }}<br>
+ProjectDetail : {{ project.description }}<br>
+duration : {{ project.duration }}<br><br>
+
+<a href="{% url 'task:task_create' project.id %}">newTaskCreate</a>
+<a href="{% url 'task:update' project.id  %}">Edit</a>
+<a href="{% url 'task:delete' project.id  %}">Delete</a>
+<br><br>
+{% for task in tasks %}
+{% csrf_token %}
+<a href="{% url 'task:task_detail' project.id task.id %}">{{ task.taskname }}</a><br>
+{% endfor %}
