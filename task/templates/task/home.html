@@ -1,4 +1,7 @@
+<a href="{% url 'task:reporter_task' %}">ReporterTask</a><br>
+<a href="{% url 'task:assign_task' %}">AssignTask</a><br>
 {% for project in project %}
 {% csrf_token %}
-<a href="{% url 'task:task_create' project.id  %}">{{ project.name }}</a><br>
+<a href="{% url 'task:project_detail' project.id  %}">{{ project.name }}</a><br>
+
 {% endfor %}

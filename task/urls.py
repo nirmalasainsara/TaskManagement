@@ -9,10 +9,24 @@ urlpatterns = [
     path("home/", views.home_view, name="home"),
     path("project/", views.project_view, name="project"),
     path(
-        "task_create/<int:project_id>/",
+        "project_detail/<int:project_id>/",
+        views.project_detail_view,
+        name="project_detail",
+    ),
+    path(
+        "project_detail/<int:project_id>/task_create/",
         views.task_create,
         name="task_create",
     ),
+    path(
+        "project_detail/<int:project_id>/task_create/<int:task_id>/",
+        views.task_detail_view,
+        name="task_detail",
+    ),
+    path("reporter_task/", views.reporter_task_view, name="reporter_task"),
+    path("assign_task/", views.assign_task_view, name="assign_task"),
+    path("update/<int:project_id>/", views.update_project, name="update"),
+    path("delete/<int:project_id>/", views.delete_project, name="delete"),
     path("register/", apiviews.RegisterView.as_view(), name="Register"),
     path("create/", apiviews.ProjectView.as_view(), name="create"),
     path(

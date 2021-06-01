@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 
-# Create your models here.
+# Create project model
 class Projects(models.Model):
     name = models.CharField(max_length=300)
     description = models.TextField()
@@ -9,6 +9,7 @@ class Projects(models.Model):
     image = models.ImageField()
 
 
+# create Task model
 class Task(models.Model):
     assign = models.ForeignKey(
         User, null=True, on_delete=models.CASCADE, related_name="task_assign"

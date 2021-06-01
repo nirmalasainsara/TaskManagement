@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 
 from datetime import timedelta
 import os
+import django_heroku
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -26,7 +27,7 @@ SECRET_KEY = "x)*@@c!l(5qk*p5b8a@97reuixk^pj+qw&s0))8(82&dmy0n_&"
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["nirmala-task-tracker.herokuapp.com"]
 
 
 # Application definition
@@ -42,7 +43,9 @@ INSTALLED_APPS = [
     "task",
 ]
 
+
 MIDDLEWARE = [
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -119,8 +122,16 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
-
+PROJECT_ROOT = os.path.join(os.path.abspath(__file__))
+STATIC_ROOT = os.path.join(PROJECT_ROOT, "staticfiles")
 STATIC_URL = "/static/"
+
+# Extra lookup directories for collectstatic to find static files
+STATICFILES_DIRS = (os.path.join(PROJECT_ROOT, "static"),)
+
+#  Add configuration for static files storage using whitenoise
+STATICFILES_STORAGE = "whitenoise.django.GzipManifestStaticFilesStorage"
+
 SIMPLE_JWT = {
     "AUTH_HEADER_TYPES": ("JWT",),
     "ACCESS_TOKEN_LIFETIME": timedelta(minutes=50),
@@ -132,3 +143,5 @@ REST_FRAMEWORK = {
         "rest_framework_simplejwt.authentication.JWTAuthentication",
     ),
 }
+
+django_heroku.settings(locals())
