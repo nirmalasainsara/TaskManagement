@@ -24,6 +24,7 @@ from django.contrib.auth import (
 from rest_framework.permissions import IsAuthenticated
 
 
+# Register apiview
 class RegisterView(generics.ListCreateAPIView):
     serializer_class = RegisterSerializer
     queryset = User.objects.all()
@@ -37,6 +38,7 @@ class RegisterView(generics.ListCreateAPIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
+# project apiview
 class ProjectView(generics.ListCreateAPIView):
     serializer_class = ProjectSerializer
     queryset = Projects.objects.all()
@@ -53,12 +55,14 @@ class ProjectView(generics.ListCreateAPIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
+# project detail apiview
 class ProjectDetailView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = ProjectSerializer
     lookup_url_kwarg = "id"
     queryset = Projects.objects.all()
 
 
+# Task apiView
 class TaskCreateView(generics.ListCreateAPIView):
     serializer_class = TaskSerializer
     permission_classes = (IsAuthenticated,)
@@ -83,6 +87,7 @@ class TaskCreateView(generics.ListCreateAPIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
+# Task detail apiview
 class TaskDetailView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = TaskSerializer
     lookup_url_kwarg = "task_id"

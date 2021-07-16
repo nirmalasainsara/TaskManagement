@@ -1,3 +1,13 @@
+{% if user.is_authenticated %}
+<a href="{% url 'task:logout' %}">Logout</a><br><br>
+
+{% endif %}
+{% if not user.is_authenticated %}
+<a href="{% url 'task:login' %}">Login</a><br><br>
+<a href="{% url 'task:signup' %}">SignUp</a><br><br>
+
+{% endif %}
+
 <a href="{% url 'task:reporter_task' %}">ReporterTask</a><br>
 <a href="{% url 'task:assign_task' %}">AssignTask</a><br>
 {% for project in project %}

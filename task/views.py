@@ -1,6 +1,7 @@
+from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render, redirect, reverse
 from .models import Projects, Task
-from .forms import ProjectForm, TaskForm
+from .forms import LoginForm, ProjectForm, SignUpForm, TaskForm
 from django.core.files.storage import FileSystemStorage
 from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth.models import User
@@ -103,3 +104,37 @@ def update_project(request, project_id):
         form.save()
         return redirect(reverse("task:home"))
     return render(request, "task/project.html", {"project": project, "form": form})
+
+
+def signup_view(request):
+    form = SignUpForm(request.POST or None)
+
+    if form.is_valid():
+        user = form.save(commit=False)
+        password = form.cleaned_data.get("password")
+        user.set_password(password)
+        user.save()
+
+        new_user = authenticate(username=user.username, password=password)
+        login(request, new_user)
+        return redirect(reverse("task:home"))
+
+    context = {"form": form}
+    return render(request, "task/project.html", context)
+
+
+# user login page
+def login_view(request):
+    form = LoginForm(request.POST or None)
+    if form.is_valid():
+        username = form.cleaned_data.get("username")
+        password = form.cleaned_data.get("password")
+        user = authenticate(username=username, password=password)
+        login(request, user)
+        return redirect(reverse("task:home"))
+    return render(request, "task/project.html", {"form": form})
+
+
+def logout_view(request):
+    logout(request)
+    return redirect(reverse("task:home"))
